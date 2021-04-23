@@ -3,7 +3,6 @@ package com.xing.controller;
 import com.xing.common.CommonResult;
 import com.xing.entity.PayMent;
 import com.xing.service.PayMentService;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
