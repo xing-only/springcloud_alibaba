@@ -54,6 +54,13 @@ public class PayMentController {
         return new CommonResult<PayMent>(200,"success",entity);
     }
 
+    /**
+     * 服务发现，获取注册中心，注册服务的详细信息
+     * @date 2021/4/23 11:02
+     * @author DXX
+     * @param
+     * @return com.xing.common.CommonResult
+     **/
     @GetMapping("/getDiscovery")
     public CommonResult getDiscovery(){
         List<String> services = discoveryClient.getServices();
