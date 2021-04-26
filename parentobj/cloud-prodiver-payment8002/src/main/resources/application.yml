@@ -23,3 +23,9 @@ eureka:
   instance:
     instance-id: payment8002 #服务名称修改（也就是将IP地址，换成可读性高的名字）
     prefer-ip-address: true #访问路径可以显示ip地址
+    #心跳检测与续约时间
+    #开发时设置小些，保证服务关闭后注册中心能及时剔除服务
+    #eureka客户端向服务端发送心跳包的间隔时间，单位为妙（默认30秒）
+    lease-renewal-interval-in-seconds: 1
+    #eureka服务端在收到最后一次心跳等待时间上限，单位为妙（默认90秒），超时将剔除服务
+    lease-expiration-duration-in-seconds: 2

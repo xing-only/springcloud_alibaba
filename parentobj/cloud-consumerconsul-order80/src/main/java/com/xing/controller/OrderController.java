@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/order")
 public class OrderController {
 
+    //注意注册名的大小写
     private static final String URL = "http://cloud-prodiver-payment";
 
     @Autowired

@@ -43,6 +43,6 @@ public class PayMentController {
         log.info("获取数据id：" + id);
         log.info("端口号：" + port);
         PayMent entity = this.payMentService.getPayMentById(id);
-        return new CommonResult<PayMent>(200,"success",entity);
+        return new CommonResult<PayMent>(200,"success端口号：" + port,entity);
     }
 }
