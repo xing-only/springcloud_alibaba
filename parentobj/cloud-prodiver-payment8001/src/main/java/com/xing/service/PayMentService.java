@@ -14,4 +14,12 @@ public interface PayMentService {
     public void add(PayMent entity);
 
     public PayMent getPayMentById(@Param("id") Integer id);
+
+    /**
+     * 生成序列号
+     *
+     * @param platId 平台代码
+     * @param seqTypeId 序号类型
+     */
+    String generateSequence(String platId, String seqTypeId);
 }

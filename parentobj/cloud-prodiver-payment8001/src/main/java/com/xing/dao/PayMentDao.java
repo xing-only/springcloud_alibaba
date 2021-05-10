@@ -16,4 +16,13 @@ public interface PayMentDao {
 
     public PayMent getPayMentById(@Param("id") Integer id);
 
+    /**
+     * 生成序列号
+     *
+     * @param platId 平台代码
+     * @param seqTypeId 序号类型
+     */
+    String selectGenerateSequence(@Param("platId") String platId,
+                                  @Param("seqTypeId") String seqTypeId);
+
 }

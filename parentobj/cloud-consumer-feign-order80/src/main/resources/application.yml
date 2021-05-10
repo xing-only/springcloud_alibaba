@@ -1,0 +1,17 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: cloud-openFeign-order
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka
+    fetch-registry: true #是否从EurekaServer抓取已有的注册信息，默认为true
+    register-with-eureka: false #表示是否将自己注册进Eurekaserver默认为true。
+
+#设置feign客户端超时时间(OpenFeign默认支持ribbon)(单位：毫秒)
+ribbon:
+  ReadTimeout: 5000 #指建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ConnectTimeout: 5000 #指的是建立连接后从服务器读取到可用资源所用的时间

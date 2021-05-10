@@ -20,4 +20,8 @@
         select <include refid="base_cloum_list"/> from pay_ment where id=#{id};
     </select>
 
+    <select id="selectGenerateSequence" resultType="string" flushCache="true">
+    SELECT F_SYS_GET_SEQID(#{platId},#{seqTypeId});
+  </select>
+
 </mapper>
