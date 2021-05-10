@@ -4,19 +4,6 @@ spring:
   application:
     name: cloud-payment-server
   datasource:
-#    type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.mysql.jdbc.Driver
-#    username: wind56-test
-#    password: FengCe56
-#    url: jdbc:mysql://101.132.147.155:50110/wind56test?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
-#    hikari:
-#      minimum-idle: 1
-#      maximum-pool-size: 20
-#      auto-commit: false
-#      idle-timeout: 30000
-#      max-lifetime: 1800000
-#      connection-timeout: 30000
-#      connection-test-query: SELECT 1
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.gjt.mm.mysql.Driver
     url: jdbc:mysql://localhost:3306/springcloudalibaba #?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
