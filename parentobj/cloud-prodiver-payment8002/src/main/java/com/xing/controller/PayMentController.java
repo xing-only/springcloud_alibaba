@@ -45,4 +45,22 @@ public class PayMentController {
         PayMent entity = this.payMentService.getPayMentById(id);
         return new CommonResult<PayMent>(200,"success端口号：" + port,entity);
     }
+
+    /**
+     * feign 读取超时
+     * @date 2021/5/10 16:38
+     * @author DXX
+     * @param
+     * @return com.xing.common.CommonResult
+     **/
+    @GetMapping("/feignTimeOUt")
+    public CommonResult feignTimeOUt(){
+        //业务处理 需要3瞄准
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return CommonResult.createSuccess();
+    }
 }
