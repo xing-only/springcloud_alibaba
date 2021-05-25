@@ -20,18 +20,21 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 import sun.net.www.protocol.https.Handler;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -54,6 +57,12 @@ public class PayMentController {
 
     @Autowired
     private DiscoveryClient discoveryClient;
+
+    @Resource
+    private HttpServletRequest request;
+
+    private static final String TIME_PATTERN = "yyyyMMddHHmmss";
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
     /**
      * 新增
@@ -161,6 +170,91 @@ public class PayMentController {
         List<String> messageList = new ArrayList<>();
         for (ConstraintViolation<Test> constraintViolation : constraintViolations) {
             messageList.add(constraintViolation.getMessage());
+        }
+    }
+
+    /**
+     * 供外部接口调用
+     * @date 2021/5/6 10:04
+     * @author DXX
+     * @param map
+     * @param
+     * @return void
+     **/
+    @PostMapping(value = "/out_download")
+    public void outDownload(@RequestBody Map map) throws IOException {
+        //解析map，获取下载图片
+        Validate.notNull(map,"参数错误");
+        JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(map));
+        JSONObject item = jsonObject.getJSONObject("item");
+        String title = item.getString("title");
+        JSONArray fields = item.getJSONArray("fields");
+        List<Map<String,String>> fileLIst = new ArrayList<>();
+        for(int i=0; i<fields.size(); i++){
+            JSONObject object = fields.getJSONObject(i);
+            if(StringUtils.equals("image",object.getString("type"))){
+                //需要下载的图片
+                JSONArray values = object.getJSONArray("values");
+                for(int j=0; j<values.size(); j++){
+                    JSONObject fileObj = values.getJSONObject(j);
+                    String fileName = fileObj.getString("name");
+                    String fileUrl = fileObj.getJSONObject("link").getString("source");
+                    Map<String,String> fileMap = new HashMap<>();
+                    fileMap.put("fileName",fileName);
+                    fileMap.put("fileUrl",fileUrl);
+                    fileLIst.add(fileMap);
+                }
+            }
+        }
+        if(CollectionUtil.isNotEmpty(fileLIst)){
+            //去重
+            Map<String, Map<String, String>> fileMaps = fileLIst.stream().collect(Collectors.groupingBy(maps -> maps.get("fileName"), Collectors.collectingAndThen(Collectors.toList(), value -> value.get(0))));
+            String downloadFilename = title + "_" + TIME_FORMATTER.format(LocalDateTime.now());//文件的名称
+            String path = request.getSession().getServletContext().getRealPath("/") + File.separator + "temp";
+            System.out.println(path);
+            File file = new File(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            String uploadPath = path + File.separator + downloadFilename + ".zip";
+            OutputStream out = new FileOutputStream(uploadPath);
+            ZipOutputStream zos = new ZipOutputStream(out);
+            InputStream ips = null;
+
+            for(String key : fileMaps.keySet()){
+                Map<String,String> fileMap = fileMaps.get(key);
+                zos.putNextEntry(new ZipEntry(fileMap.get("fileName")));
+                String url = fileMap.get("fileUrl");
+                HttpRequest httpRequest = new HttpRequest(url);
+                if(url.toLowerCase().startsWith("https")){
+                    httpRequest.setUrlHandler(new Handler());
+                }
+                HttpResponse myResponse = httpRequest.execute();
+                //获取body中的流
+                ips = myResponse.bodyStream();
+                log.info("读取文件流大小" + ips.available());
+                int len = 0;
+                byte[] buffer = new byte[1024];
+                while ((len = ips.read(buffer)) != -1){
+                    zos.write(buffer, 0, len);
+                }
+                zos.closeEntry();
+                if (null != ips) {
+                    ips.close();
+                }
+            }
+            zos.flush();
+            zos.close();
+            //上传压缩文件到文件服务器
+            File uploadFile = new File(uploadPath);
+            if(uploadFile.exists()){
+                try {
+                    System.out.println("生成成功");
+                }finally {
+                    //删除临时文件
+//                    uploadFile.delete();
+                }
+            }
         }
     }
 
