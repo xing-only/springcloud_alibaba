@@ -93,7 +93,7 @@ public class PayMentController {
      * @param
      * @return com.xing.common.CommonResult
      **/
-    @GetMapping("/getDiscovery")
+    @GetMapping("/lb/getDiscovery")
     public CommonResult getDiscovery(){
         List<String> services = discoveryClient.getServices();
         services.forEach(str ->{
