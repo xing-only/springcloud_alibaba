@@ -4,14 +4,24 @@ server:
 spring:
   application:
     name: cloud-config-server
+  #从本地读取配置文件
   cloud:
     config:
       server:
-        git:
-          uri: git@github.com:xing-only/springcloud_alibaba.git
-          search-paths:
-            - parentobj/cloud-config-server3344/src/main/resources/
-      label: dev
+        native:
+          search-locations: classpath:/
+  #从本地读取配置文件，这里必须设置
+  profiles:
+    active: native
+  # 从外部配置获取配置信息
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/xing-only/springcloud_alibaba.git #git@github.com:xing-only/springcloud_alibaba.git
+#          search-paths:
+#            - parentobj/cloud-config-server3344/src/main/resources/
+#      label: dev
 
 eureka:
   client:
