@@ -4,6 +4,8 @@ import com.xing.entity.PayMent;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 /**
  * @Description:
  * @Author DXX
@@ -22,4 +24,8 @@ public interface PayMentService {
      * @param seqTypeId 序号类型
      */
     String generateSequence(String platId, String seqTypeId);
+
+    String call(String platId, String seqTypeId);
+
+    void export() throws IOException;
 }

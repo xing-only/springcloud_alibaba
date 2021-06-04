@@ -99,13 +99,13 @@ public class PayMentController {
         services.forEach(str ->{
             log.info(str);
         });
-
+        log.info("端口号：" + port);
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVER");
         instances.forEach(entity ->{
             log.info(entity.getServiceId() + "\t" + entity.getHost() + "\t" + entity.getPort() + "\t" + entity.getUri());
         });
 
-        return new CommonResult(200,"success",discoveryClient);
+        return new CommonResult(200,"success端口号：" + port,discoveryClient);
     }
 
     /**
@@ -131,13 +131,15 @@ public class PayMentController {
         ExecutorService service = Executors.newFixedThreadPool(100);
         Set<String> list = new HashSet<>();
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10 ; i++)
         {
             service.execute(new Runnable() {
                 @Override
                 public void run() {
-                    for(int i = 0; i < 10; i++){
-                        String s = payMentService.generateSequence("P00001", "A01");
+                    for(int i = 0; i < 200; i++){
+//                        String s = payMentService.generateSequence("P00001", "E01");
+                        String s = payMentService.generateSequence("P00001", "E01");
+//                        System.out.println(s);
                         list.add(s);
                     }
                 }
@@ -154,6 +156,11 @@ public class PayMentController {
         System.out.println(list.size());
     }
 
+    @GetMapping("create1")
+    public String create1(){
+        String s = payMentService.generateSequence("P00001", "E01");
+        return s;
+    }
     /**
      * 数据校验
      * @date 2021/5/6 16:12
@@ -256,6 +263,11 @@ public class PayMentController {
                 }
             }
         }
+    }
+
+    @GetMapping("/export")
+    public void export() throws IOException {
+        this.payMentService.export();
     }
 
 }

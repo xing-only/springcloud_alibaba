@@ -1,5 +1,6 @@
 package com.xing.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date 2021/5/28
  **/
 @Configuration
+@Slf4j
 public class GatewayConfig {
 
     @Bean

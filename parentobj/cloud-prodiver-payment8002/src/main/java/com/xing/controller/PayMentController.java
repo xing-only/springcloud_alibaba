@@ -6,7 +6,12 @@ import com.xing.service.PayMentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description:
@@ -23,6 +28,9 @@ public class PayMentController {
 
     @Autowired
     private PayMentService payMentService;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
 
     /**
      * 新增
@@ -44,6 +52,28 @@ public class PayMentController {
         log.info("端口号：" + port);
         PayMent entity = this.payMentService.getPayMentById(id);
         return new CommonResult<PayMent>(200,"success端口号：" + port,entity);
+    }
+
+    /**
+     * 服务发现，获取注册中心，注册服务的详细信息
+     * @date 2021/4/23 11:02
+     * @author DXX
+     * @param
+     * @return com.xing.common.CommonResult
+     **/
+    @GetMapping("/lb/getDiscovery")
+    public CommonResult getDiscovery(){
+        List<String> services = discoveryClient.getServices();
+        services.forEach(str ->{
+            log.info(str);
+        });
+        log.info("端口号：" + port);
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVER");
+        instances.forEach(entity ->{
+            log.info(entity.getServiceId() + "\t" + entity.getHost() + "\t" + entity.getPort() + "\t" + entity.getUri());
+        });
+
+        return new CommonResult(200,"success端口号：" + port,discoveryClient);
     }
 
     /**

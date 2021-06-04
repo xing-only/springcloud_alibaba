@@ -4,6 +4,8 @@ import com.xing.entity.PayMent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
+
 /**
  * @Description: dao层
  * @Author DXX
@@ -24,5 +26,7 @@ public interface PayMentDao {
      */
     String selectGenerateSequence(@Param("platId") String platId,
                                   @Param("seqTypeId") String seqTypeId);
+
+    void call(@Param("map") Map<String,String> map);
 
 }

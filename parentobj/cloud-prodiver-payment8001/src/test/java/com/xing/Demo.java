@@ -1,8 +1,12 @@
 package com.xing;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @Description: TODO
@@ -12,9 +16,12 @@ import java.util.Date;
 public class Demo {
 
     public static void main(String[] args) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date parse = sdf.parse("2021-05-25 10:25:10");
-        System.out.println(editCertificatesStatus(parse));;
+
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("big",new BigDecimal(12));
+        String big = map.get("big").toString();
+        System.out.println(big);
+
     }
 
     private static String editCertificatesStatus(Date certificatesDate){
