@@ -1,9 +1,11 @@
 package com.xing.dao;
 
+import com.xing.entity.BasNotice;
 import com.xing.entity.PayMent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,5 +30,7 @@ public interface PayMentDao {
                                   @Param("seqTypeId") String seqTypeId);
 
     void call(@Param("map") Map<String,String> map);
+
+    List<BasNotice> select(Map<String,String> map);
 
 }

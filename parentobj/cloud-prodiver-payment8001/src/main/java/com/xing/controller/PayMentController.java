@@ -265,6 +265,11 @@ public class PayMentController {
         }
     }
 
+    @GetMapping("select")
+    public void select(){
+        this.payMentService.select();
+    }
+
     @GetMapping("/export")
     public void export() throws IOException {
         this.payMentService.export();

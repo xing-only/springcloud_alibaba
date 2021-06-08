@@ -2,6 +2,7 @@ package com.xing.service.impl;
 
 import cn.hutool.poi.excel.WorkbookUtil;
 import com.xing.dao.PayMentDao;
+import com.xing.entity.BasNotice;
 import com.xing.entity.PayMent;
 import com.xing.entity.UserTest;
 import com.xing.service.PayMentService;
@@ -189,6 +190,12 @@ public class PayMentServiceImpl implements PayMentService {
 
         response.setContentType("application/msexcel;charset=UTF-8");
         WorkbookUtil.writeBook(contentRow, response.getOutputStream());
+    }
+
+    @Override
+    public void select() {
+        Map map = new HashMap();
+        List<BasNotice> list = this.payMentDao.select(map);
     }
 
     /*

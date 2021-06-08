@@ -17,10 +17,14 @@ public class Demo {
 
     public static void main(String[] args) throws ParseException {
 
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("big",new BigDecimal(12));
-        String big = map.get("big").toString();
-        System.out.println(big);
+//        HashMap<String,Object> map = new HashMap<>();
+//        map.put("big",new BigDecimal(12));
+//        String big = map.get("big").toString();
+//        System.out.println(big);
+
+        String message = "Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'ss' in 'field list'\r\n###";
+        message = message.substring(message.indexOf("MySQLSyntaxErrorException")+"MySQLSyntaxErrorException".length()+1, message.indexOf("\r", message.indexOf("MySQLSyntaxErrorException")+1));
+        System.out.println(message);
 
     }
 

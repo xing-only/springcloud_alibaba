@@ -1,5 +1,5 @@
 server:
-  port: 3355
+  port: 3366
 spring:
   application:
     name: cloud-config-client
@@ -11,6 +11,7 @@ spring:
       discovery:
         enabled: true
         service-id: cloud-config-server
+
 
   #rabbitmq相关配置 15672是Web管理界面的端口；5672是MQ访问的端口<----------------------
   rabbitmq:

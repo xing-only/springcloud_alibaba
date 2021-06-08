@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/config")
-@RefreshScope
+@RefreshScope //可动态刷新获取的配置属性
 public class ConfigTestController {
 
     @Value("${config.info}")

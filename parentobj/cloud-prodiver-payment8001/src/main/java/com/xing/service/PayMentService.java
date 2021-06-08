@@ -28,4 +28,7 @@ public interface PayMentService {
     String call(String platId, String seqTypeId);
 
     void export() throws IOException;
+
+    void select();
+
 }

@@ -32,4 +32,8 @@
          )
   </select>
 
+    <select id="select" parameterType="map">
+        select ss from t_bas_notice
+    </select>
+
 </mapper>
