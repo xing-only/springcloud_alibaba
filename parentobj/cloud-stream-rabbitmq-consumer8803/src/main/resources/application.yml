@@ -1,5 +1,5 @@
 server:
-  port: 8802
+  port: 8803
 spring:
   application:
     name: cloud-stream-consumer
@@ -29,7 +29,7 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka
   instance:
-    instance-id: receive-8802.com
+    instance-id: receive-8803.com
     prefer-ip-address: true
     #心跳检测与续约时间
     #开发时设置小些，保证服务关闭后注册中心能及时剔除服务
