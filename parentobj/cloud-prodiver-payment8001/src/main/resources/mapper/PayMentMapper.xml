@@ -21,7 +21,7 @@
     </select>
 
     <select id="selectGenerateSequence" resultType="string" flushCache="true">
-    SELECT F_SYS_GET_SEQID_TEST3(#{platId},#{seqTypeId});
+    SELECT F_SYS_GET_SEQID(#{platId},#{seqTypeId});
   </select>
 
     <select id="call" parameterType="map" flushCache="true" statementType="CALLABLE">

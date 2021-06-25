@@ -131,15 +131,15 @@ public class PayMentController {
         ExecutorService service = Executors.newFixedThreadPool(100);
         Set<String> list = new HashSet<>();
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 10 ; i++)
+        for (int i = 0; i < 100 ; i++)
         {
             service.execute(new Runnable() {
                 @Override
                 public void run() {
-                    for(int i = 0; i < 200; i++){
+                    for(int i = 0; i < 10; i++){
 //                        String s = payMentService.generateSequence("P00001", "E01");
                         String s = payMentService.generateSequence("P00001", "E01");
-//                        System.out.println(s);
+                        System.out.println(s);
                         list.add(s);
                     }
                 }
@@ -273,6 +273,11 @@ public class PayMentController {
     @GetMapping("/export")
     public void export() throws IOException {
         this.payMentService.export();
+    }
+
+    @GetMapping("/zipkin")
+    public String paymentZipkin() {
+        return "hi ,i'am paymentzipkin server fall back，welcome to here, O(∩_∩)O哈哈~";
     }
 
 }

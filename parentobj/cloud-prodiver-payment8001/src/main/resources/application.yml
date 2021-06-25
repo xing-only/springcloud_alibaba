@@ -17,6 +17,14 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      #采样率值介于 0 到 1 之间，1 则表示全部采集
+      probability: 1
+
+
 #    type: com.alibaba.druid.pool.DruidDataSource
 #    driver-class-name: org.gjt.mm.mysql.Driver
 #    url: jdbc:mysql://localhost:3306/springcloudalibaba #?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false

@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: cloud-order-service
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      probability: 1
 #注册到eureka服务端
 eureka:
   client:
