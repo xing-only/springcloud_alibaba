@@ -34,6 +34,8 @@
     <module>cloudalibaba-prodiver-payment9001</module>
     <module>cloudalibaba-prodiver-payment9002</module>
     <module>cloudalibaba-consumer-order83</module>
+      <module>cloudalibaba-config-nacos-client3377</module>
+      <module>cloud-websocket-server</module>
   </modules>
 
   <!-- 统一管理jar包版本 -->
